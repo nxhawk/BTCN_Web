@@ -1,0 +1,17 @@
+- Xây dựng bố cục tổng quát gồm Header, Nav, Main, Side và Footer theo thông số kích thước và vị trí yêu cầu. Tổng thể trang web phải được canh giữa trình duyệt theo chiều ngang: 100% (1 điểm).
+- Định dạng phần Header bao gồm cả dữ liệu: 100% (1 điểm).
+- Định dạng phần Nav bao gồm cả dữ liệu: 100% (1 điểm).
+- Định dạng phần Footer bao gồm cả dữ liệu: 100% (1 điểm).
+- Định dạng phần Side bao gồm cả dữ liệu: 100% (1 điểm).
+- Cho phép đóng mở (thu gọn) của NEWS: 100% (1 điểm).
+- Cho phép thay đổi thứ tự các NEWS, có kéo thả: 100% (1 điểm).
+- Định dạng phần nhập liệu: 100% (1 điểm).
+- Xử lý kiểm tra dữ liệu phần nhập liệu: 100% (1 điểm).
+- Định dạng phần Danh sách sản phẩm (bao gồm dữ liệu): 100% (1 điểm).
+- Xử lý chuyển sản phẩm bằng button: 100% (1 điểm).
+- Xử lý chuyển sản phẩm bằng mouse kéo thả: 100% (1 điểm).
+- Định dạng bảng danh sách: 100% (1 điểm).
+- Xử lý chức năng Đăng ký và Xóa hết: 100% (1 điểm).
+- Đáp ứng responsive với độ phân giải 768px: 100% (1 điểm).
+
+=> Tổng điểm: 15 điểm 

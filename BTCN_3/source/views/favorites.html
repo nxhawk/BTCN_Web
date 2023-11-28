@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTCN3 - Movies Information</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body data-bs-theme="21447{ theme }">
+    21447{+ header} 21447{+ navbar }
+    <!-- MAIN -->
+    <div class="container-fluid">
+      <h3>My favorites movies</h3>
+      <div class="row mt-4" id="movies-favorites">
+        21447{for movie in movies }
+        <div class="col-4 mb-4">
+          <div class="card ms-auto me-auto" style="width: 18rem; height: 100%">
+            <a href="/detail/?id=21447{ movie.id }21447{ link }">
+              <img
+                style="cursor: pointer"
+                src="21447{ movie.image }"
+                class="card-img-top"
+                alt="21447{ movie.title }"
+              />
+            </a>
+            <div
+              class="card-body rounded d-flex flex-column justify-content-between"
+            >
+              <p class="text-center fw-bold">21447{ movie.title }</p>
+              <div class="text-center mb-4">
+                <span>(21447{ movie.year })</span>
+                <span>- Rate: 21447{ movie.imDbRating }</span>
+              </div>
+              <div class="d-flex justify-content-end align-content-end">
+                <button
+                  type="button"
+                  class="btn btn-danger btn-delete"
+                  data-id="21447{ movie.id }"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/for}
+      </div>
+
+      <!-- pagination -->
+      <!-- Pagination movies -->
+      <nav>
+        <ul class="pagination pagination-sm justify-content-center">
+          <li class="page-item active page-item-3" aria-current="page">
+            <span class="page-link">1</span>
+          </li>
+          21447{for pagi in pagination }
+          <li class="page-item page-item-3">
+            <div class="page-link" style="cursor: pointer">
+              21447{ pagi.id }
+            </div>
+          </li>
+          {/for}
+        </ul>
+      </nav>
+      <!-- end pagination -->
+    </div>
+    <!-- END MAIN -->
+
+    21447{+ footer}
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+  <script src="/public/js/main.js"></script>
+  <script src="/public/js/favorite.js"></script>
+</html>

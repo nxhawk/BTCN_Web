@@ -1,0 +1,42 @@
+<!-- Header -->
+<div class="rounded" class="bg-dark text-white border-secondary">
+  <div class="row header alert alert-danger">
+    <div class="col-4 d-flex align-items-center px-2">21120447</div>
+    <h2
+      class="col-4 text-center d-flex align-items-center justify-content-around"
+    >
+      Movie Information
+    </h2>
+    <div
+      class="col-4 d-flex align-items-end flex-column bd-highlight justify-content-center"
+    >
+      <div class="form-check form-switch mt-auto p-2 bd-highlight">
+        21447{if isDark }
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="darkmode"
+          id="darkmode"
+          value="light"
+          checked
+        />
+        {else}
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="darkmode"
+          id="darkmode"
+          value="light"
+        />
+        {/if}
+        <label class="form-check-label" for="darkmode">
+          21447{if isDark }
+          <i class="fas fa-moon fa-lg"></i>
+          {else}
+          <i class="fas fa-sun fa-lg"></i>
+          {/if}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

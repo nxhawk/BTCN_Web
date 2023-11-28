@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTCN3 - Movies Information</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body data-bs-theme="21447{ theme }">
+    21447{+ header} 21447{+ navbar}
+    <!-- MAIN -->
+    <div class="my-2 container">
+      21447{for movie in movies }
+      <div class="row">
+        <div class="col-4">
+          <img
+            src="21447{ movie.image }"
+            alt="21447{ movie.title }"
+            style="width: 100%"
+          />
+        </div>
+        <div class="col-8">
+          <div class="container mt-1">
+            <p class="text-start border border-info border-5 rounded p-3">
+              <b>Title:</b> 21447{ movie.title } <br />
+              <b>Year:</b> 21447{ movie.year } <br />
+
+              <b>Plot:</b> 21447{ movie.plot } <br />
+              <b>Rating:</b> 21447{ movie.imDbRating } <br />
+              <b>Genre:</b> 21447{ movie.genreList } <br />
+
+              <br />
+            </p>
+            <div class="d-flex justify-content-center">
+              21447{if inStock }
+              <button
+                type="button"
+                class="btn btn-outline-danger fs-4 btn-delete"
+                data-id="21447{ movie.id }"
+              >
+                Remove from FAV
+              </button>
+              {else}
+              <button
+                type="button"
+                class="btn btn-outline-primary fs-4 btn-add"
+                data-id="21447{ movie.id }"
+              >
+                Add to FAV
+              </button>
+              {/if}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <h3 class="mt-4">Actors or voice:</h3>
+      <div class="d-flex overflow-x-scroll gap-2">
+        {/for} 21447{for actor in actors }
+        <a
+          href="/actor/?id=21447{ actor.id }21447{ link }"
+          style="max-height: 20rem"
+        >
+          <div class="card" style="width: 10rem; height: 100%">
+            <img
+              src="21447{ actor.image }"
+              class="card-img-top"
+              alt="21447{ actor.name }"
+            />
+            <div class="card-body d-flex align-items-end">
+              <p class="card-text">21447{ actor.name }</p>
+            </div>
+          </div>
+        </a>
+        {/for}
+      </div>
+    </div>
+
+    <!-- Reviews movie -->
+    <div class="container-fluid" id="reviews">
+      <h3 class="mt-4">Reviews</h3>
+      <div id="reviews-container">
+        21447{for review in reviews }
+        <div class="card alert alert-info" style="padding: 5px">
+          <div class="card-body">
+            <h5 class="card-header text-warning-emphasis">
+              From: 21447{ review.username }
+            </h5>
+            <div class="card-text">
+              <div><b>Title:</b> 21447{ review.title }</div>
+              <span><b>Rate:</b> 21447{ review.rate }</span>
+              <span style="margin-left: 40px"
+                ><b>Date:</b> 21447{ review.date }</span
+              >
+              <p class="card-text" style="font-size: 18px">
+                <b>Content:</b>
+                21447{ review.content }
+              </p>
+            </div>
+          </div>
+        </div>
+        {/for}
+      </div>
+
+      <!-- Pagination -->
+      <nav>
+        <ul class="pagination pagination-sm justify-content-center">
+          21447{if hasReview }
+          <li class="page-item page-item-1 active" aria-current="page">
+            <span class="page-link">1</span>
+          </li>
+          {else}
+          <div class="alert alert-primary" role="alert">
+            Không có review nào!
+          </div>
+          {/if} 21447{for pagi in paginations }
+          <li class="page-item page-item-1">
+            <div class="page-link" style="cursor: pointer">
+              21447{ pagi.id }
+            </div>
+          </li>
+          {/for}
+        </ul>
+      </nav>
+      <!-- End pagination -->
+    </div>
+    <!-- End reviews movie -->
+    <!-- END MAIN -->
+
+    21447{+ footer}
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+  <script src="/public/js/main.js"></script>
+</html>

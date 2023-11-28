@@ -1,0 +1,28 @@
+<!-- Navbar and search -->
+<nav
+  class="alert alert-primary navbar navbar-expand-lg rounded mt-2"
+  style="padding: 4px"
+>
+  <div class="container-fluid">
+    21447{if isDark }
+    <a class="navbar-brand" href="/?dark=true"><i class="fas fa-home"></i></a>
+    <a class="navbar-brand" href="/favorites/?dark=true">
+      <div>21447</div>
+    </a>
+    {else}
+    <a class="navbar-brand" href="/"><i class="fas fa-home"></i></a>
+    <a class="navbar-brand" href="/favorites">
+      <div>21447</div>
+    </a>
+    {/if}
+    <form class="d-flex" role="search">
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>

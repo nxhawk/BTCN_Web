@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTCN3 - Movies Information</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body data-bs-theme="21447{ theme }">
+    21447{+ header } 21447{+ navbar}
+    <!-- MAIN -->
+
+    <!-- Top 5 rating movie -->
+    <div
+      id="newestSlide"
+      class="carousel carousel-dark slide mt-2 mb-3"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#newestSlide"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#newestSlide"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#newestSlide"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#newestSlide"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#newestSlide"
+          data-bs-slide-to="4"
+          aria-label="Slide 5"
+        ></button>
+      </div>
+
+      <div class="carousel-inner">
+        21447{for movie in movies_active }
+        <div class="carousel-item active">
+          <a href="/detail/?id=21447{ movie.id }21447{ link }">
+            <img
+              src="21447{ movie.image }"
+              class="d-block rounded-2"
+              alt="21447{ movie.title }"
+              style="cursor: pointer"
+            />
+          </a>
+          <div class="carousel-caption d-none d-md-block text-warning-emphasis">
+            <h5>21447{ movie.fullTitle }</h5>
+            <p>[ 21447{ movie.genreList } ]</p>
+          </div>
+        </div>
+        {/for} 21447{for movie in movies }
+        <div class="carousel-item">
+          <a href="/detail/?id=21447{ movie.id }21447{ link }">
+            <img
+              src="21447{ movie.image }"
+              class="d-block rounded-2"
+              alt="21447{ movie.title }"
+              style="cursor: pointer"
+            />
+          </a>
+          <div class="carousel-caption d-none d-md-block text-warning-emphasis">
+            <h5>21447{ movie.fullTitle }</h5>
+            <p>[ 21447{ movie.genreList } ]</p>
+          </div>
+        </div>
+        {/for}
+      </div>
+
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#newestSlide"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#newestSlide"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <!-- End top 5 rating movie -->
+
+    <!-- Top Box Office  -->
+    <div class="mb-5">
+      <h3 class="text-start">Top Box Office</h3>
+
+      <div
+        id="popularSlide"
+        class="carousel carousel-dark slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="3"
+            aria-label="Slide 4"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="4"
+            aria-label="Slide 5"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="5"
+            aria-label="Slide 6"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="6"
+            aria-label="Slide 7"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="7"
+            aria-label="Slide 8"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="8"
+            aria-label="Slide 9"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#popularSlide"
+            data-bs-slide-to="9"
+            aria-label="Slide 10"
+          ></button>
+        </div>
+
+        <div class="carousel-inner">
+          21447{for movie in listTopBoxOffice_active }
+          <div class="carousel-item active">
+            <div class="row">
+              21447{for m in movie }
+              <div class="col-4">
+                <a href="/detail/?id=21447{ m.id }21447{ link }">
+                  <div class="box-container">
+                    <img
+                      style="cursor: pointer"
+                      src="21447{ m.image }"
+                      class="d-block rounded-1 border border-black"
+                      alt="21447{ m.title }"
+                    />
+                    <div class="box text-white bg-black">
+                      21447{ m.title } (21447{ m.year })
+                    </div>
+                  </div>
+                </a>
+              </div>
+              {/for}
+            </div>
+          </div>
+          {/for} 21447{for movie in listTopBoxOffice }
+          <div class="carousel-item">
+            <div class="row">
+              21447{for m in movie }
+              <div class="col-4">
+                <a href="/detail/?id=21447{ m.id }21447{ link }">
+                  <div class="box-container">
+                    <img
+                      style="cursor: pointer"
+                      src="21447{ m.image }"
+                      class="d-block rounded-1 border border-black"
+                      alt="21447{ m.title }"
+                    />
+                    <div class="box text-white bg-black">
+                      21447{ m.title } (21447{ m.year })
+                    </div>
+                  </div>
+                </a>
+              </div>
+              {/for}
+            </div>
+          </div>
+          {/for}
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#popularSlide"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#popularSlide"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <!-- End Top Box Office -->
+
+    <!-- Top Favorites  -->
+    <div class="mb-5">
+      <h3 class="text-start">Top Favorites</h3>
+
+      <div
+        id="topRatingSlide"
+        class="carousel carousel-dark slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="3"
+            aria-label="Slide 4"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="4"
+            aria-label="Slide 5"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="5"
+            aria-label="Slide 6"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="6"
+            aria-label="Slide 7"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="7"
+            aria-label="Slide 8"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="8"
+            aria-label="Slide 9"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#topRatingSlide"
+            data-bs-slide-to="9"
+            aria-label="Slide 10"
+          ></button>
+        </div>
+
+        <div class="carousel-inner">
+          21447{for movie in listTopFavorites_active }
+          <div class="carousel-item active">
+            <div class="row">
+              21447{for m in movie }
+              <div class="col-4">
+                <a href="/detail/?id=21447{ m.id }21447{ link }">
+                  <div class="box-container">
+                    <img
+                      style="cursor: pointer"
+                      src="21447{ m.image }"
+                      class="d-block rounded-1 border border-black"
+                      alt="21447{ m.title }"
+                    />
+                    <div class="box text-white bg-black">
+                      21447{ m.title } (21447{ m.year })
+                    </div>
+                  </div>
+                </a>
+              </div>
+              {/for}
+            </div>
+          </div>
+          {/for} 21447{for movie in listTopFavorites }
+          <div class="carousel-item">
+            <div class="row">
+              21447{for m in movie }
+              <div class="col-4">
+                <a href="/detail/?id=21447{ m.id }21447{ link }">
+                  <div class="box-container">
+                    <img
+                      style="cursor: pointer"
+                      src="21447{ m.image }"
+                      class="d-block rounded-1 border border-black"
+                      alt="21447{ m.title }"
+                    />
+                    <div class="box text-white bg-black">
+                      21447{ m.title } (21447{ m.year })
+                    </div>
+                  </div>
+                </a>
+              </div>
+              {/for}
+            </div>
+          </div>
+          {/for}
+        </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#topRatingSlide"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#topRatingSlide"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <!-- End Top Favorites -->
+
+    <!-- END MAIN -->
+    21447{+ footer}
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+  <script src="/public/js/main.js"></script>
+</html>

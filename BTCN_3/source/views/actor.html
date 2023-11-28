@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTCN3 - Movies Information</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body data-bs-theme="21447{ theme }">
+    21447{+ header} 21447{+ navbar}
+    <!-- MAIN -->
+    <div class="my-2 container">
+      <div>
+        <h2>About</h2>
+        21447{for act in actor }
+        <div class="row">
+          <div class="col-4">
+            <img
+              src="21447{ act.image }"
+              alt="21447{ act.name }"
+              style="width: 100%"
+            />
+          </div>
+          <div class="col-8">
+            <div class="container mt-1">
+              <p class="text-start border border-info border-5 rounded p-3">
+                <b>Name:</b> 21447{ act.name } <br />
+                <b>Role:</b> 21447{ act.role } <br />
+                <b>Summary:</b> 21447{ act.summary } <br />
+                <b>BirthDate:</b> 21447{ act.birthDate } <br />
+                <b>Awards:</b> 21447{ act.awards } <br />
+              </p>
+            </div>
+          </div>
+        </div>
+        {/for}
+      </div>
+
+      <!-- Danh sach movie tham gia -->
+      <h2 class="mt-4">Movies Involved</h2>
+      <div class="row">
+        21447{for movie in movies }
+        <div class="col-4 mb-4">
+          <a href="/detail/?id=21447{ movie.id }21447{ link }">
+            <div
+              class="card ms-auto me-auto"
+              style="width: 18rem; height: 100%"
+            >
+              <img
+                style="cursor: pointer"
+                src="21447{ movie.image }"
+                class="card-img-top"
+                alt="21447{ movie.title }"
+              />
+              <div class="card-body rounded">
+                <p class="text-center fw-bold">21447{ movie.title }</p>
+                <p class="text-center">(21447{ movie.year })</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        {/for}
+      </div>
+      <!-- End danh sach movie tham gia -->
+    </div>
+    <!-- END MAIN -->
+
+    21447{+ footer}
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+  ></script>
+  <script src="/public/js/main.js"></script>
+</html>
