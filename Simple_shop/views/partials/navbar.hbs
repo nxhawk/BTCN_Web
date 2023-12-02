@@ -1,0 +1,77 @@
+<nav
+  class="navbar navbar-expand-lg bg-light
+    {{hideHF}}
+    position-fixed top-0 end-0 w-100"
+  style="z-index: 1000;"
+>
+  <div class="container">
+    <a class="navbar-brand" href="/">Home</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            id="navbarDropdown"
+          >
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {{! for here }}
+            {{#each categoryList}}
+              <li><a
+                  class="dropdown-item"
+                  href="/category/{{CatID}}"
+                >{{CatName}}</a></li>
+            {{/each}}
+            {{! end for }}
+
+            <li><hr class="dropdown-divider" /></li>
+            <li><a
+                style="cursor: pointer;"
+                class="dropdown-item"
+                data-bs-toggle="modal"
+                data-bs-target="#modalForm"
+              >Add new Category</a></li>
+          </ul>
+        </li>
+      </ul>
+      {{! user }}
+      <div class="dropdown">
+        <div
+          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+          href="#"
+          id="navbarDropdownMenuAvatar"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="rounded-circle fa fa-user-circle fa-2x"></i>
+        </div>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" href="/profile">Profile</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="/logout">Log out</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,65 @@
+<div class="modal" tabindex="-1" id="modalForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new category</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="/category" method="POST" id="addCatForm">
+          <div class="mb-3">
+            <label for="catName" class="col-form-label">Category Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="catName"
+              name="CatName"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Close</button>
+        <button
+          type="submit"
+          form="addCatForm"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+        >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div
+    id="addCatToast"
+    class="toast hide bg-success text-white"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    data-bs-autohide="false"
+  >
+    <div class="toast-header">
+      <strong class="me-auto">Notification</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Add new category successful
+      <br />Refresh in 1 seconds...
+    </div>
+  </div>
+</div>

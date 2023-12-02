@@ -1,0 +1,25 @@
+<div class="container-fluid" style="padding-top: 80px;">
+    <h1 class="mt-2">{{CatName}}</h1>
+    <button type="button" class="btn btn-danger ms-2 btn-sm d-{{btn_display}}" data-bs-toggle="modal"
+        data-bs-target="#modalFormDel">Delete</button>
+    <button type="button" class="btn btn-warning ms-2 btn-sm d-{{btn_display}}" data-bs-toggle="modal"
+        data-bs-target="#modalFormEdit">Edit</button>
+    <button type="button" class="btn btn-primary ms-2 btn-sm d-{{btn_display}}" data-bs-toggle="modal"
+        data-bs-target="#modalFormAddPro">Add Product</button>
+    <div class="row gap-3 justify-content-center mt-3">
+    {{#each productList}}
+            <div class="col-2 text-center card">
+                <a href="/product/{{ProID}}">
+                <img src="/imgs/pid/{{ProID}}/main.jpg" class="card-img-top" alt="{{ProID}}-{{ProName}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ProName}}</h5>
+                    <p class="card-text">{{Price}}</p>
+                </div>
+                </a>
+            </div>
+    {{/each}}
+    </div>
+</div>
+{{>addCat}}
+{{>deleteCat}}
+{{>editCat}}
