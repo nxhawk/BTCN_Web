@@ -1,6 +1,10 @@
 const { pgp, db } = require("../models/DBconnection");
 
 module.exports = {
+  getByID: async (CatID) => {
+    const rs = db.any('SELECT * FROM "Categories" WHERE "CatID"=$1', [CatID]);
+    return rs;
+  },
   add: async (data) => {
     var CatID = await db.one('SELECT MAX("CatID") FROM "Categories"');
     CatID = CatID.max + 1;

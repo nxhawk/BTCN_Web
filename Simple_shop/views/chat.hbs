@@ -1,0 +1,36 @@
+<section style="padding-top: 80px;" class="container-fluid">
+  <div class="container" id="container-message">
+
+  </div>
+  <form id="form-mess">
+    <div class="input-group mb-3">
+      <input
+        id="message"
+        type="text"
+        class="form-control"
+        placeholder="Your message"
+        aria-label="Recipient's username"
+        aria-describedby="button-addon2"
+      />
+      <button
+        class="btn btn-primary"
+        type="submit"
+        id="button-addon2"
+      >Send</button>
+    </div>
+  </form>
+</section>
+
+<script>
+  $("#form-mess").on("submit", async function(e) { e.preventDefault(); let
+  message = $("#message").val(); if (message.trim().length > 0){ await
+  fetch('chat', { method: 'POST', headers: { 'Accept': 'application/json',
+  'Content-Type': 'application/json' }, body: JSON.stringify({message}) });
+  $("#message").val(''); } }); let w; function startWW(){ w = new
+  Worker('/js/worker.js');w.onmessage = function(e){ let messages =
+  e.data?.messages; if (messages.length > 0) {
+  $("#notify").text(messages.length);
+  document.querySelector("#container-message").innerHTML =""; for (let message
+  of messages) { document.querySelector("#container-message").innerHTML +=
+  `<p>${message}</p>`; } } } }; startWW();
+</script>

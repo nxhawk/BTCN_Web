@@ -59,6 +59,20 @@ $(document).ready(function () {
     var bsToast = new bootstrap.Toast(toast);
     bsToast.show();
   });
+  $("#addProForm").submit(function () {
+    var toast = document.getElementById("addProToast");
+    var bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+  });
+  $("#delProForm").submit(function () {
+    var toast = document.getElementById("delProToast");
+    var bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+  });
+
+  $("#File").change((e) => showPreview(e));
+
+  $("#FileE").change((e) => showPreview1(e));
 });
 
 function customRefValidity(name, value = "") {
@@ -77,7 +91,6 @@ function checkUpperCaseFirstLetter(name) {
       return false;
     }
   }
-  console.log("ok");
   return true;
 }
 
@@ -86,4 +99,22 @@ function checkUserName(name) {
   if (!/^[A-Za-z0-9_]*$/.test(name)) return 2;
   if (name.charAt(0) >= "0" && name.charAt(0) <= "9") return 3;
   return 0;
+}
+
+function showPreview(e) {
+  if (e.target.files.length > 0) {
+    var src = URL.createObjectURL(e.target.files[0]);
+    var preview = document.getElementById("file-ip-2-preview");
+    preview.src = src;
+    preview.style.display = "block";
+  }
+}
+
+function showPreview1(e) {
+  if (e.target.files.length > 0) {
+    var src = URL.createObjectURL(e.target.files[0]);
+    var preview = document.getElementById("file-ip-1-preview");
+    preview.src = src;
+    preview.style.display = "block";
+  }
 }

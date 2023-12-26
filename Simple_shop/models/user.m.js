@@ -9,6 +9,10 @@ module.exports = {
     const rs = db.any('SELECT * FROM "Users" WHERE "ID"=$1', [ID]);
     return rs;
   },
+  getByEmail: async (email) => {
+    const rs = db.any('SELECT * FROM "Users" WHERE "Email"=$1', [email]);
+    return rs;
+  },
   add: async (data) => {
     let ID = await db.one('SELECT MAX("ID") FROM "Users"');
     ID = ID.max + 1;

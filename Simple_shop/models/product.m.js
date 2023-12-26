@@ -18,17 +18,26 @@ module.exports = {
     );
     return rs;
   },
-  update: async (CatID, data) => {
+  update: async (ProID, data) => {
     const rs = await db.none(
-      'UPDATE "Categories" SET "CatName" = $1 WHERE "CatID" = $2',
-      [data, CatID]
+      'UPDATE "Products" SET "ProName"=$1,"TinyDes"=$2,"FullDes"=$3,"Price"=$4,"CatID"=$5,"Quantity"=$6 WHERE "ProID"=$7',
+      [
+        data.ProName,
+        data.TinyDes,
+        data.FullDes,
+        data.Price,
+        data.CatID,
+        data.Quantity,
+        ProID,
+      ]
     );
     return rs;
   },
-  delete: async (CatID) => {
-    const rs = await db.any('DELETE FROM "Categories" WHERE "CatID"=$1', [
-      CatID,
-    ]);
+  delete: async (ProID) => {
+    const rs = await db.any(
+      'DELETE FROM "Products" WHERE "ProID"=$1 RETURNING *',
+      [ProID]
+    );
     return rs;
   },
   getAll: async () => {
@@ -42,5 +51,10 @@ module.exports = {
   getByCatID: async (CatID) => {
     const rs = db.any('SELECT * FROM "Products" WHERE "CatID"=$1', [CatID]);
     return rs;
+  },
+  getNewProID: async () => {
+    var proID = await db.one('SELECT MAX("ProID") FROM "Products"');
+    proID = proID.max + 1;
+    return proID;
   },
 };

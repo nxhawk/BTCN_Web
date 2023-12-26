@@ -1,6 +1,6 @@
+require("dotenv").config();
 const userM = require("../models/user.m");
-const CryptoJS = require("crypto-js");
-const hashLength = 64;
+const bcrypt = require("bcrypt");
 
 module.exports = {
   render: async (req, res, next) => {
@@ -21,14 +21,12 @@ module.exports = {
     try {
       let newUser = req.body;
       const pw = newUser.password;
-      userM.getByUsername(newUser.username).then((rs) => {
+      userM.getByUsername(newUser.username).then(async (rs) => {
         if (rs.length === 0) {
-          const salt = Date.now().toString(16);
-          const pwSalt = newUser.password + salt;
-          const pwHashed = CryptoJS.SHA3(pwSalt, {
-            outputLength: hashLength * 4,
-          }).toString(CryptoJS.enc.Hex);
-          newUser.password = pwHashed + salt;
+          // hash password
+          const saltRounds = 10;
+          const hash = await bcrypt.hashSync(newUser.password, saltRounds);
+          newUser.password = hash;
           // new user
           userM.add(newUser);
           res.render("registerSuccess", { hideHF: "d-none" });

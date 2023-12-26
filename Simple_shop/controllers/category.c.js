@@ -1,5 +1,7 @@
 const catM = require("../models/categories.m");
 const productM = require("../models/product.m");
+const path = require("path");
+const fs = require("fs");
 
 module.exports = {
   addCategory: async (req, res, next) => {
@@ -56,6 +58,47 @@ module.exports = {
         setTimeout(function () {
           res.redirect("/");
         }, 1000);
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  addProduct: async (req, res, next) => {
+    try {
+      var proID = 0;
+      productM.getNewProID().then((rs) => {
+        proID = rs;
+        const dir = path.resolve("./public/imgs/pid/" + rs);
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+        }
+        const multer = require("multer");
+        const storage = multer.diskStorage({
+          destination: function (req, file, cb) {
+            cb(null, "./public/imgs/pid/" + proID);
+          },
+          filename: function (req, file, cb) {
+            cb(null, "main.jpg");
+          },
+        });
+        const upload = multer({ storage: storage }).single("File");
+        upload(req, res, function (err) {
+          if (err instanceof multer.MulterError) {
+            console.log(err);
+          } else if (err) {
+            // An unknown error occurred when uploading.
+            console.log(err);
+          }
+
+          // Everything went fine.
+          var CatID = req.params.CatID;
+          var data = req.body;
+          productM.add(CatID, data).then(() => {
+            setTimeout(function () {
+              res.redirect("/category/" + CatID);
+            }, 3000);
+          });
+        });
       });
     } catch (error) {
       next(error);

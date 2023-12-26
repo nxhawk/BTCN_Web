@@ -1,0 +1,119 @@
+<div class="modal" tabindex="-1" id="modalFormAddPro">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new product to "{{CatName}}"</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          action="/category/{{CatID}}/add-product"
+          method="POST"
+          id="addProForm"
+          enctype="multipart/form-data"
+        >
+          <div class="mb-3">
+            <label for="proName" class="col-form-label">Product Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="proName"
+              name="proName"
+              required
+            />
+            <label for="proTinyDes" class="col-form-label">Short Description:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="proTinyDes"
+              name="proTinyDes"
+              required
+            />
+            <label for="proFullDes" class="col-form-label">Full Description:</label>
+            <textarea
+              class="form-control"
+              id="proFullDes"
+              name="proFullDes"
+              rows="3"
+            ></textarea>
+            <label for="proPrice" class="col-form-label">Price:</label>
+            <input
+              type="number"
+              step="any"
+              class="form-control"
+              id="proPrice"
+              name="proPrice"
+              required
+            />
+            <label for="proQuantity" class="col-form-label">Quantity:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="proQuantity"
+              name="proQuantity"
+              required
+            />
+            <label for="File" class="form-label">Image:</label>
+            <div class="mb-3 preview text-center">
+              <img
+                id="file-ip-2-preview"
+                src=""
+                style="display: block;max-width: 100%;width: fit-content;height: auto;"
+              />
+            </div>
+            <input
+              class="form-control"
+              type="file"
+              id="File"
+              accept="image/*"
+              name="File"
+              required
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Cancle</button>
+        <button
+          type="submit"
+          form="addProForm"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+        >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div
+    id="addProToast"
+    class="toast hide bg-success text-white"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    data-bs-autohide="false"
+  >
+    <div class="toast-header">
+      <strong class="me-auto">Notification</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      Add new product successful
+      <br />Refresh in 2 seconds...
+    </div>
+  </div>
+</div>

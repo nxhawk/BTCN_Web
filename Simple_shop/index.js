@@ -1,3 +1,4 @@
+require("dotenv").config();
 const hbs = require("express-handlebars");
 const express = require("express");
 const session = require("express-session");
@@ -20,7 +21,7 @@ app.use(express.json());
 app.set("trust proxy", 1); // trust first proxy
 app.use(
   session({
-    secret: "secret-key-123",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
@@ -43,16 +44,18 @@ app.set("views", path.join(__dirname, "/views"));
 
 // middleware
 const authMw = require("./middleware/auth.mw");
+require("./middleware/passport.mw")(app);
 
 // Routes
-app.use("/login", require("./routes/login.r"));
-app.use("/register", require("./routes/register.r"));
-app.use("/logout", require("./routes/logout.r"));
+app.use("/login", authMw.dontLogin, require("./routes/login.r"));
+app.use("/register", authMw.dontLogin, require("./routes/register.r"));
+app.use("/logout", authMw.mustLogin, require("./routes/logout.r"));
 app.use("/category", authMw.mustLogin, require("./routes/category.r"));
 app.use("/product", authMw.mustLogin, require("./routes/product.r"));
+app.use("/chat", require("./routes/chat.r"));
 
 // -------- homepages
-app.use("/", require("./routes/home.r"));
+app.use("/", authMw.mustLogin, require("./routes/home.r"));
 
 // error handlers
 app.use((err, req, res, next) => {
