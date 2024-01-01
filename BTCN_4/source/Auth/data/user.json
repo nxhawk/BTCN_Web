@@ -1,0 +1,54 @@
+{
+    "users": [
+        {
+            "username": "haonhat",
+            "password": "$2b$10$grLy8PXnDQ85IFH59uuuW.3M6.JncJchDG4Jm9MBpISk4h5n.U7H.",
+            "fullname": "Nguyên Nhat Hao",
+            "avatar": "https://avatar.iran.liara.run/public/30",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoiaGFvbmhhdCJ9LCJpYXQiOjE3MDQwMzAzNjQsImV4cCI6MTcwNDExNjc2NH0.qf2l7p31LDaZRXWdGGTdBmIylnOz00hqWMpH35tgxG4",
+            "nickname": "haon",
+            "shareAvatar": "on",
+            "color": "#e01f1f"
+        },
+        {
+            "username": "admin",
+            "password": "$2b$10$xVWfciGNG47vJqA3fwEFyu6yLU3g3D1zCXlDu8WV2RfVWg5Y/73MC",
+            "fullname": "Nguyen Nhat ao",
+            "avatar": "https://avatar.iran.liara.run/public/2",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNzA0MDI5MDM2LCJleHAiOjE3MDQxMTU0MzZ9.8TLYSkTteLrZldUaQplo4Cn1l5OiK-d3KgBP5IoN9_Q",
+            "nickname": "admin",
+            "shareAvatar": "on",
+            "color": "#1e5ad2"
+        },
+        {
+            "username": "un1",
+            "password": "$2b$10$vdDTCN9Y00HDv37reaJ.iuQlDcmTjdxpIIN2Ymz8Po.NnC7stWSkO",
+            "fullname": "Nguyễn Văn A",
+            "avatar": "https://avatar.iran.liara.run/public/3",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoidW4xIn0sImlhdCI6MTcwNDAzMjg1MCwiZXhwIjoxNzA0MTE5MjUwfQ.YS-RPZTjDRYmDAxqhfPXu0ipjIWx4yUJKfSd7u0EsiQ",
+            "nickname": "un1",
+            "shareAvatar": "on",
+            "color": "#21ca62"
+        },
+        {
+            "username": "un2",
+            "password": "$2b$10$/2T/i1HMFeLNan8isFmuLeU.Ets3tDexevywCOg0BzK6tMYIfGds6",
+            "fullname": "Nguyễn Ngọc Lan",
+            "avatar": "https://avatar.iran.liara.run/public/51",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoidW4yIn0sImlhdCI6MTcwNDAzMjg3MiwiZXhwIjoxNzA0MTE5MjcyfQ.4R3tJS_WPzJAtt9ei0-EQUNTveHUrh8xrfGuNluoTAg",
+            "nickname": "un2",
+            "shareAvatar": "on",
+            "color": "#ec2222"
+        },
+        {
+            "username": "un3",
+            "password": "$2b$10$dhOxEw6VhieOjZPwTdBv1es4BECW8JRvYE.4RK8elnk8OsqEQyqVK",
+            "fullname": "Trần Văn B",
+            "avatar": "https://avatar.iran.liara.run/public/5",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoidW4zIn0sImlhdCI6MTcwNDAzMjk3NywiZXhwIjoxNzA0MTE5Mzc3fQ.ogMw-vBPS-X_hL86_jXRZJxxGKWluGWConwrVl5BKIU",
+            "nickname": "un3",
+            "shareAvatar": "off",
+            "color": "#000000"
+        }
+    ]
+}

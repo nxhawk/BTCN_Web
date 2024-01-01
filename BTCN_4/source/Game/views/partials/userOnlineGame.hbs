@@ -1,0 +1,78 @@
+<style>
+  .dropdown-toggle::after {
+    display: none;
+  }
+</style>
+<div>
+  <h4>User online:</h4>
+  <ul id="userOnline" style="padding: 0;">
+
+  </ul>
+</div>
+
+<script>
+  let response2;
+  async function invitePlayer(player) {
+    const res = await fetch(`/board/${name}/${player}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data) {
+      if (response2?.username == data) {
+        socket.emit('invite', { player1: data, name, player2: player })
+        showToast(`Đã gửi lời mời đến người chơi ${player} !!!`, 'bg-success');
+      } else {
+        showToast(`Bạn không phải chủ phòng nên không thể mời người khác`, 'bg-warning');
+      }
+    } else {
+      showToast(`Người chơi ${player} hiện đang tham gia trận đấu, hãy mời người khác!!!`, 'bg-info');
+    }
+  }
+
+  function updateUserOnlineView(data) {
+    let listuser = ""
+    for (let user of data) {
+      if (user.username != response2.username) {
+        if (response2.board.player2.length == 0) {
+          listuser += `
+          <div class="dropdown mb-2">
+            <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            style="padding:0px;border:none" aria-expanded="false">
+                  > ${user.username}
+            </button>
+            <ul class="dropdown-menu" style="width:fit-content;">
+                <li><button class="dropdown-item" onclick='invitePlayer("${user.username}")'>Mời tham gia</button ></li>
+            </ul>
+          </div>
+        `
+        } else {
+          listuser += `<li>${user.username}</li>`
+        }
+      }
+
+    }
+    document.getElementById("userOnline").innerHTML = listuser;
+  }
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    name = document.getElementById("name").textContent;
+    const res = await fetch(`/board/${name}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    response2 = await res.json();
+
+    socket.emit("newlogin", { username: response2.username });
+
+    socket.on("newlogin", (data) => {
+      updateUserOnlineView(data);
+    })
+  })
+
+
+</script>

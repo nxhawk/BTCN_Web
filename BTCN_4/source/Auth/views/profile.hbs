@@ -1,0 +1,156 @@
+<style>
+  .ss {
+    border: 1px solid black;
+    width: fit-content;
+    border-radius: 10px;
+  }
+
+  .form-check {
+    display: flex;
+  }
+
+  .form-check-input {
+    display: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #color {
+    max-width: 90px;
+    height: 50px;
+  }
+</style>
+<section>
+  <h1 class="mb-4">Profile Page</h1>
+  <div class="row">
+    <div class="col-4">
+      <img src="{{user.avatar}}" alt="" id="preview" width="200" height="200">
+      <input type="file" id="avatar" accept="image/*" name="avatar" style="visibility:hidden; height:0;" />
+      <button type="button" class="btn btn-secondary" id="selectImg" data-bs-toggle="modal"
+        data-bs-target="#selectImgModal">
+        Select Image
+      </button>
+    </div>
+    <div class="col-8">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+        <input readonly type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default" value="{{user.username}}" name="username" id="username">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Nickname</span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default" value="{{user.nickname}}" name="nickname" id="nickname">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Fullname &nbsp;</span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default" value="{{user.fullname}}" name="fullname" id="fullname">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">
+          <label for="color">Choose the color for the chess piece</label>
+        </span>
+        <input type="color" class="form-control" value="{{user.color}}" name="color" id="color">
+      </div>
+      <div class="d-flex justify-content-center mt-5">
+        <button type="button" id="submit" class="btn btn-primary fs-5 px-4">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="selectImgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Select new avatar</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex gap-2 flex-wrap" id="screen-avatar">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="selectNewAvatar()"
+            data-bs-dismiss="modal">Select</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentAvatar = document.getElementById("preview");
+  let idxImg = -1;
+  let response = []
+
+  function selectNewAvatar() {
+    if (idxImg < 0 || idxImg > response.length - 1) return;
+    document.getElementById("preview").src = response[idxImg];
+    idxImg = -1;
+  }
+
+  function selectMe(e) {
+    idxImg = parseInt(e.getAttribute("data-id"));
+  }
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    document.getElementById("selectImg").addEventListener("click", async function () {
+      const res = await fetch("/auth/avatar", {
+        method: "GET"
+      });
+
+      response = await res.json();
+      response = response.filter(avatar => avatar != currentAvatar.src);
+
+      let screen_data = document.getElementById("screen-avatar");
+      screen_data.innerHTML = '';
+      // show image
+      let idx = 0;
+      for (r of response) {
+        screen_data.innerHTML += `
+        <div class="form-check ss">
+            <input class="form-check-input avt" type="radio" onchange="selectMe(this)" name="flexRadioDefault" data-id="${idx}" id="${idx}">
+            <label class="form-check-label" for="${idx}">
+              <img src="${r}" alt="" width="100" height="100">
+            </label>
+          </div>`
+        idx++;
+      }
+    })
+
+  })
+
+  $(document).ready(function () {
+    $("#submit").on("click", async function () {
+      const data = {
+        "username": $("#username").val(),
+        "nickname": $("#nickname").val(),
+        "fullname": $("#fullname").val(),
+        "avatar": $("#preview").attr("src"),
+        "color": $("#color").val()
+      }
+
+      const res = await fetch("/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const response = await res.json();
+      if (response.success) {
+        showToast("Cập nhật thông tin người dùng thành công!!", "bg-success")
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000)
+      } else {
+        showToast(response.message || "Có lỗi xảy ra, hãy thử lại!!!", "bg-danger")
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000)
+      }
+    })
+  })
+</script>

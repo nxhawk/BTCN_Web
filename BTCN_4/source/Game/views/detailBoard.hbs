@@ -1,0 +1,80 @@
+<style>
+  .square {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    margin-left: 1px;
+    margin-top: 1px;
+    font-size: 34px;
+    font-weight: 900;
+  }
+</style>
+<section>
+  <div id="name" style="visibility: hidden;">{{board.name}}</div>
+  <div class="row">
+    <div id="board-game" class="col-7">
+    </div>
+    <div class="col-5 fs-4">
+      <p class="mb-2 fw-bold" style="color:{{board.color1}}">Player 1(O): {{board.player1}}</p>
+      <span class="fw-bold">VS</span>
+      <p class="mb-5 fw-bold" style="color:{{board.color2}}">Player 2(X): {{board.player2}}</p>
+      {{#if (uWin board.state)}}
+      <p class="mb-2 text-info fw-bold">Player {{board.state}} win this game</p>
+      {{else}}
+      <p class="mb-2 text-info fw-bold">Kết quả trận đấu hòa</p>
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+<script>
+  function showBoardGame(data) {
+
+    if (data.board?.color1?.length < 1) data.board.color1 = "#000000";
+    if (data.board?.color2?.length < 1) data.board.color2 = "#000000";
+
+    let board = document.getElementById("board-game");
+    let row = '';
+    board.innerHTML = '';
+    for (let i = 0; i < data.board.size; i++) {
+      let row = ""
+      for (let j = 0; j < data.board.size; j++) {
+        val = "";
+        for (cell of data.board.steps)
+          if (cell.row == i && cell.col == j) {
+            if (parseInt(cell.val) == 1) val = 'O';
+            else val = 'X';
+            break;
+          }
+        let abc = "#000000"
+        if (val == 'X') abc = data.board.color2;
+        else if (val == 'O') abc = data.board.color1;
+
+        row += `<div class="square d-flex align-items-center justify-content-center"
+        style="color:${abc}"
+        >${val}</div>`;
+      }
+      board.innerHTML += `<div class="d-flex">
+                            ${row}
+                        </div>`
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    name = document.getElementById("name").textContent;
+    const res = await fetch(`/board/${name}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    response = await res.json();
+    username = document.getElementById("abs").textContent;
+    if (username != response.board.player1 && username != response.board.player2) {
+      window.location.href = '/'
+      return;
+    }
+    showBoardGame(response);
+  })
+</script>

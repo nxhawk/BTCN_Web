@@ -1,0 +1,42 @@
+<section class="mt-3">
+  {{#if boards}}
+  {{else}}
+  <h2>Chưa có lịch sử chơi nào</h2>
+  {{/if}}
+  {{#each boards}}
+  <div class="card mb-3">
+    <div class="card-header">
+      <b>
+        ID board game: {{this.name}}
+      </b>
+    </div>
+    <div class="card-body">
+      <div class="card-text d-flex gap-5 mb-3">
+        <p class="mb-2 text-success fw-bold">Player 1: {{this.player1}}</p>
+        <span class="fw-bold">VS</span>
+        <p class="mb-2 text-danger fw-bold">Player 2: {{this.player2}}</p>
+        <span class="fw-bold">-></span>
+        {{#if (uWin this.state)}}
+        <p class="mb-2 text-info fw-bold">Player {{this.state}} win this game</p>
+        {{else}}
+        <p class="mb-2 text-info fw-bold">Kết quả trận đấu hòa</p>
+        {{/if}}
+      </div>
+      <a href="/board/history/{{this.name}}" class="btn btn-primary">View detail game</a>
+    </div>
+  </div>
+  {{/each}}
+</section>
+
+<script>
+  // logout
+  const socket = io();
+
+  document.getElementById("logout").addEventListener("click", function () {
+    let username = document.getElementById("abs").textContent;
+    console.log(username);
+    if (username) socket.emit("logout", { username });
+    localStorage.clear();
+    window.location.href = "/auth/logout";
+  })
+</script>

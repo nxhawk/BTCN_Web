@@ -1,0 +1,78 @@
+<section>
+  <div class="d-flex justify-content-end">
+
+  </div>
+  <div style="visibility: hidden;" id="username">{{username}}</div>
+  <div class="row">
+    <div class="col-3">
+      {{>userOnline}}
+    </div>
+    <div class="col-4" id="boards">
+      {{#each boards}}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Id game: {{name}}</h5>
+          <h6 class="card-subtitle mb-2 text-success">Player1: {{player1}}</h6>
+          {{#if player2}}
+          <h6 class="card-subtitle mb-2 text-danger">Player2: {{player2}}</h6>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" onclick='playClick(this)' data-id="{{name}}">View</button>
+          </div>
+          {{else}}
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" data-id="{{name}}" onclick="playClick(this)">Play</button>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+
+    </div>
+    <div class="col-5">
+      {{>chat-home}}
+    </div>
+  </div>
+
+</section>
+
+<script>
+  function playClick(element) {
+    if (document.getElementById("gameST").textContent == 'game' && element.textContent == 'Play') {
+      showToast("Bạn đang có trận đấu nên không thể tham gia trấn đấu này!!!", "bg-info")
+      return;
+    }
+    const name = $(element).attr("data-id");
+    window.location.href = `/board/${name}`
+  }
+
+  socket.on("newboard", function (data) {
+    let listboard = "";
+    for (board of data) {
+      let isFullPlayer = `
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" onclick="playClick(this)">Play</button>
+        </div>
+      `
+      if (board.player2.length > 0)
+        isFullPlayer = `
+          <h6 class="card-subtitle mb-2 text-danger">Player2: ${board.player2}</h6>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" data-id='${board.name}' onclick='playClick(this)'>View</button>
+          </div>
+        `
+
+      listboard += `
+        <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Id game: ${board.name}</h5>
+          <h6 class="card-subtitle mb-2 text-success data-id='${board.name}' onclick='playClick(this)'">Player1: ${board.player1}</h6>
+          ${isFullPlayer}
+        </div>
+        </div>
+      `
+
+    }
+    document.getElementById("boards").innerHTML = listboard;
+  })
+
+</script>

@@ -1,0 +1,53 @@
+<div>
+  <h4>User online:</h4>
+  <ul id="userOnline">
+  </ul>
+</div>
+
+<script>
+  function updateUserOnlineView(data) {
+    const username = document.querySelector("#username").textContent;
+    let listuser = ""
+    for (let user of data) {
+      if (user.username != username)
+        listuser += `<li>${user.username}</li>`
+    }
+    document.getElementById("userOnline").innerHTML = listuser;
+  }
+  const socket = io();
+  document.addEventListener("DOMContentLoaded", async function () {
+    const username = document.querySelector("#username").textContent;
+    if (!username) {
+      window.location.href = "https:/localhost:3003/auth/login";
+    } else {
+      socket.emit("newlogin", { username: username });
+
+    }
+  });
+
+  socket.on("newlogin", (data) => {
+    updateUserOnlineView(data);
+  })
+
+  socket.on("logout", (data) => {
+    updateUserOnlineView(data);
+  })
+
+  socket.on("invite", (data) => {
+    const username = document.querySelector("#username").textContent;
+    if (data.player2 == username) {
+      document.getElementById("player1").innerHTML = data.player1;
+      document.getElementById("player2").innerHTML = data.player2;
+      document.getElementById("boardId").innerHTML = data.name;
+      inviteModal.show();
+    }
+  })
+
+  document.getElementById("logout").addEventListener("click", function () {
+    const username = document.querySelector("#username").textContent;
+    if (username) socket.emit("logout", { username });
+    localStorage.clear();
+    window.location.href = "/auth/logout";
+  })
+
+</script>

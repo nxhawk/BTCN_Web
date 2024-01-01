@@ -1,0 +1,74 @@
+<style>
+  .emoji {
+    cursor: context-menu;
+    text-align: center;
+    padding: 2px;
+  }
+
+  .emoji:hover {
+    background-color: #5FBDFF;
+    border-radius: 3px;
+  }
+</style>
+<div>
+  <div class="card">
+    <h5 class="card-title mx-4 my-2">Chat box</h5>
+    <div class="card-body" style="max-height: 400px; overflow-y:scroll">
+      <ul id="chatbox-game">
+      </ul>
+    </div>
+  </div>
+  <form id="chat-form" class="d-flex gap-2 mt-2">
+    <input type="text" id="chat-mess-game" class="form-control">
+    <button id="send-chat-game" class="btn btn-primary">Send</button>
+  </form>
+  <p class="mt-2 mb-2">
+    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample"
+      aria-expanded="false" aria-controls="collapseWidthExample">
+      Emoji
+    </button>
+  </p>
+  <div style="min-height: 120px;">
+    <div class="collapse collapse-horizontal" id="collapseWidthExample">
+      <div class="card card-body" style="width: 240px">
+        <div class="d-flex flex-wrap" id="listEmoji">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const listEmojiData = ["&#128512;", "&#128513;", "&#128514;", "&#128515;", "&#128516;", "&#128517;", "&#128564;", "&#128557;", "&#128561;", "&#128564;", "&#128525;", "&#129327;", "&#129392;", "&#129398;", "&#129402;", "&#129322;", "&#129323;", "&#129300;", "&#128561;", "&#128545;", "&#128542;", "&#128528;", "&#128526;", "&#129315;"]
+
+  function addEmoji(element) {
+    const emoji = $(element).attr("data-emoji");
+    const currentMess = document.getElementById('chat-mess-game');
+    currentMess.value += emoji;
+  }
+  /// chat here
+  document.getElementById("send-chat-game").addEventListener("click", function (e) {
+    e.preventDefault();
+    let mess = document.getElementById("chat-mess-game").value.trim();
+    let username = response?.username;
+    if (mess.length > 0) {
+      if (username.length < 0) {
+        window.location.href = "https:/localhost:3003/auth/login";
+      }
+      mess = `<b>${username}</b>: ${mess}`;
+      socket.emit("message-game", { message: mess, name: response?.board?.name });
+    }
+    document.getElementById("chat-mess-game").value = ""
+  });
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    socket.on("message-game", data => {
+      if (response?.board?.name == data.name)
+        document.getElementById("chatbox-game").innerHTML += `<li>${data.message}</li>`;
+    });
+    let list_emoji = document.getElementById("listEmoji");
+    list_emoji.innerHTML = "";
+    for (em of listEmojiData)
+      list_emoji.innerHTML += `<span class="emoji" data-emoji=${em} onclick="addEmoji(this)">${em}</span>`
+  })
+</script>

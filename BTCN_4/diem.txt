@@ -1,0 +1,57 @@
+
+Điểm phần cơ bản theo trình tự:
+✓ 0.5 điểm: hoàn thành server Auth như yêu cầu.
+	- Chưa có chức năng cung cấp, cấu hình Credential (có UI) để sử dụng giao thức Oauth2.0
+	
+✓ 1 điểm: chức năng đăng ký tài khoản với xử lý validate username bằng AJAX
+và lưu trữ password đúng tiêu chuẩn: 100%
+
+✓ 1 điểm: chức năng đăng nhập và đăng xuất của server Game như yêu cầu: 100%
+
+✓ 1 điểm: trang chủ server Game với bố cục hợp lý đầy đủ thông tin danh sách
+người đang online (phải hiển thị được), danh sách Bàn game, khung chat
+trang chủ, navbar cơ bản cho các chức năng yêu cầu (tạo Bàn chơi, xem bảng
+xếp hạng,…): 100%
+
+✓ 0.5 điểm: quản lý profile người chơi (thay đổi avatar bao gồm mặc định của
+server Game và avatar lấy từ Auth nếu được phép, thay đổi hình ảnh quân cờ,
+bàn cờ, thay đổi nickname,…)
+	+ Chưa thay đổi được hình ảnh bàn cờ, quân cờ
+
+✓ 1 điểm: chức năng chat với người dùng đang đăng nhập (hiển thị tức thì nội
+dung trong khung chat) ở trang chủ: 100%
+
+✓ 1 điểm: chức năng chat trong Bàn game: 100%
+
+✓ 0.5 điểm: tạo Bàn game với lựa chọn thời gian giới hạn mỗi nước cờ, kích
+thước và hình ảnh bàn cờ, quân cờ. Mỗi người dùng chỉ được tạo duy nhất
+1 Bàn game tại 1 thời điểm, cho phép truy cập nhanh Bàn game của mình
+thông qua navbar: 50%
+	- Chưa có thời gian giới hạn cho mỗi nước cờ, chưa chọn được hình ảnh bàn cờ
+	
+✓ 1 điểm: tham gia Bàn game với vai trò chủ Bàn game thì chờ duyệt người
+chơi và điều khiển bắt đầu chơi, nếu vai trò khách thì xin tham gia chơi nếu
+chưa bắt đầu, ngược lại thì theo dõi trò chơi: 100%
+
+✓ 0.5 điểm: xử lý chơi luân phiên và có thời gian giới hạn cho mỗi nước đi
+	- Chưa có thời gian giới hạn cho mỗi nước đi
+
+✓ 0.5 điểm: xử lý thắng hoặc hòa, kết thúc Bàn game và tính điểm cho người
+chơi
+	- Chưa tính điểm cho người chơi (chỉ lưu các nước đi, thắng, hòa)	
+
+Các phần sau được đánh giá độc lập:
+
+✓ 1 điểm: chức năng emoji cho nội dung chat: 100%
+
+✓ 0 điểm: sử dụng refresh token để giữ đăng nhập trong thời gian người dùng
+đã lựa chọn
+
+✓ 0.5 điểm: hiển thị và lưu lịch sử nước đi trong Bàn game:
+	- Chưa hiển thị được lịch sử nước đi
+
+✓ 0 điểm: lịch sử các Bàn game đã tham gia (bao gồm lịch sử nước đi).
+
+✓ 0 điểm: cho phép replay Bàn game theo cả 2 chế độ
+
+=> Tổng điểm tự đánh giá: 10 điểm

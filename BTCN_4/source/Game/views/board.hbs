@@ -1,0 +1,339 @@
+<style>
+  .square {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    margin-left: 1px;
+    margin-top: 1px;
+    font-size: 34px;
+    font-weight: 900;
+  }
+</style>
+<section>
+  <div id="name" style="visibility: hidden;">{{name}}</div>
+  <div id="infor">
+  </div>
+  <div id="myModal">
+    <div class="modal fade" id="accpetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Have user want play</h5>
+            <button type="button" onclick="rejectUser()" class="btn-close" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="text-modal"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" onclick="acceptUser()">Đồng ý</button>
+            <button type="button" class="btn btn-danger" onclick="rejectUser()" data-bs-dismiss="modal">Không đồng
+              ý</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      {{>userOnlineGame}}
+    </div>
+    <div class="col-7">
+      <div class="fs-5 text-info fw-bold">You are: <b id="youAre"> </b></div>
+      <div id="turn" class="mb-2 fs-5 text-success fw-bold"></div>
+      <div id="board-game">
+      </div>
+    </div>
+    <div class="col-3">
+      {{>chat-game}}
+    </div>
+  </div>
+</section>
+
+<script>
+  let socket = io();
+  let boardGame = [];
+  let canTick = false;
+  //Game play
+  function checkIsValidTick(row, col) {
+    row = parseInt(row);
+    col = parseInt(col);
+    if (row < 0 || col < 0 || row > response.board.size - 1 || col > response.board.size - 1) return false;
+    for (let cell of response.board.steps) {
+      if (row == cell.row && col == cell.col) return false;
+    }
+    return true;
+  }
+
+  function tickMe(square) {
+    if (!canTick) {
+      return;
+    }
+    if (isPlayer == 0) {
+      showToast("Bạn chỉ có thể xem trận đấu này!!!", "bg-info");
+      return;
+    }
+
+    if (turn !== isPlayer) {
+      showToast("Đang ở lượt chơi của đối thủ, bạn không thể đánh", "bg-info");
+      return;
+    }
+    let col = $(square).attr("data-col");
+    let row = $(square).parent().attr("data-row");
+    if (checkIsValidTick(row, col)) {
+      socket.emit('tick', { name, row, col });
+    } else {
+      showToast("Ô này đã được đánh rồi, hãy thử ô khác!!!", "bg-info");
+      return;
+    }
+  }
+
+  function checkState(board) {
+    //0: dang choi, 1: playerO thang, 2: playerX: thang, 3: hoa
+    let gap = 3;
+    if (response.board.size >= 9) gap = 5;
+    let playerX = 0;
+    let playerO = 0;
+    let full = true;
+    // ngang
+    for (let i = 0; i < response.board.size; i++) {
+      playerO = 0;
+      playerX = 0;
+      for (let j = 0; j < response.board.size; j++) {
+        if (boardGame[i][j] === 1) {
+          playerO++;
+          playerX = 0;
+        } else if (boardGame[i][j] === 2) {
+          playerX++;
+          playerO = 0;
+        } else {
+          playerX = 0;
+          playerO = 0;
+          full = false;
+        }
+        if (playerX >= gap) return 2;
+        if (playerO >= gap) return 1;
+      }
+    }
+    if (full) return 3;
+    // doc
+    for (let j = 0; j < response.board.size; j++) {
+      playerO = 0;
+      playerX = 0;
+      for (let i = 0; i < response.board.size; i++) {
+        if (boardGame[i][j] === 1) {
+          playerO++;
+          playerX = 0;
+        } else if (boardGame[i][j] === 2) {
+          playerX++;
+          playerO = 0;
+        } else {
+          playerX = 0;
+          playerO = 0;
+        }
+        if (playerX >= gap) return 2;
+        if (playerO >= gap) return 1;
+      }
+    }
+    //cheo phai
+    for (let i = 0; i < response.board.size - gap + 1; i++) {
+      for (let j = 0; j < response.board.size - gap + 1; j++) {
+        let win1 = 1;
+        let win2 = 2;
+        for (let k = 0; k < gap; k++) {
+          if (boardGame[i + k][j + k] == 0) {
+            win1 = win2 = 0;
+          } else if (boardGame[i + k][j + k] == 1) win2 = 0;
+          else if (boardGame[i + k][j + k] == 2) win1 = 0;
+        }
+        if (win1 == 1) return 1;
+        if (win2 == 2) return 2;
+      }
+    }
+    // cheo trai
+    for (let i = 0; i < response.board.size - gap + 1; i++)
+      for (let j = response.board.size - 1; j >= gap - 1; j--) {
+        let win1 = 1;
+        let win2 = 2;
+        for (let k = 0; k < gap; k++) {
+          if (boardGame[i + k][j - k] == 0) {
+            win1 = win2 = 0;
+          } else if (boardGame[i + k][j - k] == 1) win2 = 0;
+          else if (boardGame[i + k][j - k] == 2) win1 = 0;
+        }
+        if (win1 == 1) return 1;
+        if (win2 == 2) return 2;
+      }
+    return 0;
+  }
+
+  function showBoardGame(data) {
+    canTick = false;
+    for (let i = 0; i < data.board.size; i++) {
+      boardGame[i] = []
+      for (let j = 0; j < data.board.size; j++) boardGame[i][j] = 0;
+    }
+
+    if (isPlayer == 1 || isPlayer == 2) {
+      document.getElementById("youAre").innerText = "player" + isPlayer;
+    } else {
+      document.getElementById("youAre").innerText = "viewer";
+    }
+    if (data.board?.color1?.length < 1) data.board.color1 = "#000000";
+    if (data.board?.color2?.length < 1) data.board.color2 = "#000000";
+
+    turn = data.board.now;
+    document.getElementById("turn").innerText = "Turn of player" + turn;
+    let board = document.getElementById("board-game");
+    let row = '';
+    board.innerHTML = '';
+    for (let i = 0; i < data.board.size; i++) {
+      let row = ""
+      for (let j = 0; j < data.board.size; j++) {
+        val = "";
+        for (cell of data.board.steps)
+          if (cell.row == i && cell.col == j) {
+            if (parseInt(cell.val) == 1) val = 'O';
+            else val = 'X';
+            boardGame[i][j] = parseInt(cell.val);
+            break;
+          }
+        let abc = "#000000"
+        if (val == 'X') abc = data.board.color2;
+        else if (val == 'O') abc = data.board.color1;
+
+        row += `<div class="square d-flex align-items-center justify-content-center" data-col="${j}" onclick="tickMe(this)"
+        style="color:${abc}"
+        >${val}</div>`;
+      }
+      board.innerHTML += `<div class="d-flex" data-row="${i}">
+                            ${row}
+                        </div>`
+    }
+    const state = checkState(boardGame);
+    if (state > 0) {
+      // game da xong
+      socket.emit("donegame", { name, state });
+    } else {
+      canTick = true;
+    }
+  }
+  //
+  let response = null;
+  let name = "";
+  let newPlayer2 = "";
+  var myModal = null;
+  let isPlayer = 0;
+  let username = "";
+  let turn = 0;
+
+  function acceptUser() {
+    socket.emit('play', newPlayer2);
+  }
+
+  function rejectUser() {
+    socket.emit('reject', newPlayer2);
+  }
+
+  socket.on('donegame', data => {
+    if (name == data.name) {
+      if (data.state == 3) showToast("Kế quả hòa!!!", 'bg-info');
+      else showToast(`Player ${data.state} win!!!`, 'bg-info');
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000)
+    }
+  })
+
+  socket.on('tick', data => {
+    if (name == data.name) {
+      response.board = data;
+      showBoardGame(response);
+    }
+  })
+
+  socket.on('play', data => {
+    if (data != null && data.name == name) {
+      if (myModal != null) myModal.hide();
+      response = data;
+      window.location.reload();
+    }
+  });
+
+  socket.on('reject', data => {
+    if (data.name == response.board.name && response.username == data.username) {
+      showToast("Chủ phòng không chấp nhận đấu với bạn!!!", "bg-danger");
+      setTimeout(function () {
+        window.location.href = "/";
+      }, 3000);
+    }
+  })
+
+  socket.on('rejectInvite', data => {
+    if (data.name == response.board.name && response.username == data.player1) {
+      showToast(`Người chơi ${data.player2} không chấp nhận lời thách đấu của bạn!!!`, "bg-info");
+    }
+  })
+
+  socket.on('join', async (data) => {
+    if (data.name == response.board.name && response.username == response.board.player1) {
+      // chấp nhận ko
+      newPlayer2 = data;
+      document.getElementById('text-modal').innerHTML = `Người chơi <b>${data.username}</b> muốn chơi cùng bạn`
+      myModal = new bootstrap.Modal(document.getElementById('accpetModal'))
+      myModal.show()
+    }
+  })
+  document.addEventListener("DOMContentLoaded", async function () {
+    name = document.getElementById("name").textContent;
+    const res = await fetch(`/board/${name}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    response = await res.json();
+    if (response.username == response.board.player1) {
+      if (response.board.player2.length == 0) {
+        // wait user
+        document.getElementById('infor').innerHTML = `
+          <div class="alert alert-primary" role="alert">
+              Vui lòng đợi người chơi thứ 2
+          </div>
+        `
+      } else {
+        isPlayer = 1;
+        showBoardGame(response);
+      }
+    } else if (response.board.player2.length == 0) {
+      // want play with admin
+      document.getElementById('infor').innerHTML = `
+          <div class="alert alert-primary" role="alert">
+              Vui lòng đợi admin chấp nhận - Nếu bạn đợi lâu quá hãy refresh lại trang để gửi lại yêu cầu
+          </div>
+        `
+      socket.emit("join", { name: response.board.name, username: response.username });
+    } else {
+      // is player 2
+      if (response.username == response.board.player2) {
+        isPlayer = 2;
+      } else {
+        //viewer
+      }
+      showBoardGame(response);
+    }
+  });
+
+
+  // logout
+  socket.on("logout", (data) => {
+    updateUserOnlineView(data);
+  })
+
+  document.getElementById("logout").addEventListener("click", function () {
+    if (username) socket.emit("logout", { username });
+    localStorage.clear();
+    window.location.href = "/auth/logout";
+  })
+</script>
